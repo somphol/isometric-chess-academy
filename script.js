@@ -2716,6 +2716,15 @@
     var promoOptions = candidates.filter(function (m) { return !!m.promotion; });
     if (promoOptions.length && !promo) {
       UI.promotionPending = { from: from, to: to };
+      var promoColor = game.turn;
+      $$('.promo-choice').forEach(function (choice) {
+        var type = choice.getAttribute('data-promo');
+        var glyph = choice.querySelector('.promo-glyph');
+        if (glyph) {
+          glyph.textContent = pieceGlyph(type, promoColor);
+          glyph.setAttribute('data-glyph', promoColor + type);
+        }
+      });
       openModal(els.promotionModal, els.promotionModal.querySelector('.promo-choice'));
       return;
     }
@@ -3520,7 +3529,7 @@
         openEndModal(st);
         return;
       }
-      if (Math.floor(now / 1000) % 10 === 0) saveState();
+      if (now - UI.lastSavedAt > 10000) saveState();
     }, 250);
 
     document.addEventListener('visibilitychange', function () {
