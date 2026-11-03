@@ -1,0 +1,91 @@
+{
+  "project": "Isometric Chess Academy & Studio",
+  "release": "1.0.0",
+  "ruleset": "Standard international (Western) chess — kings, queens, bishops, rooks, knights and pawns; castling, en passant, promotion, checkmate and draw rules. Not Thai chess (Makruk); Thai is only an interface language.",
+  "session": {
+    "id": "ses_e607f33aaffe8e4SA7JRy9ej1f",
+    "startedAt": "2026-11-03T03:43:00.699000Z",
+    "capturedAt": "2026-11-03T04:04:49.480142Z",
+    "elapsedSeconds": 1308,
+    "elapsed": "21m 48s",
+    "note": "Wall-clock time from the OpenCode session's creation to this capture. The app, repository, CI workflow and live GitHub Pages deployment were already complete at capture time. The state file and its commit were written immediately after this capture."
+  },
+  "model": {
+    "name": "DeepSeek V4.1 Flash",
+    "id": "deepseek-v4.1-flash",
+    "provider": "opencode-go"
+  },
+  "usage": {
+    "inputTokens": 492113,
+    "outputTokens": 99870,
+    "reasoningTokens": 81983,
+    "cacheReadTokens": 12617088,
+    "cacheWriteTokens": 1282,
+    "totalTokens": 13292336,
+    "costUSD": 0.0,
+    "note": "Read from the OpenCode session database. totalTokens sums all five counters, including cache reads; cache reads are repeated prompt context and dominate the figure. costUSD is 0 on the flat-rate plan."
+  },
+  "artifacts": {
+    "sourceFiles": [
+      "index.html",
+      "style.css",
+      "script.js"
+    ],
+    "lineCounts": {
+      "index.html": 518,
+      "style.css": 1087,
+      "script.js": 3619
+    },
+    "supportingFiles": [
+      "README.md",
+      "AGENTS.md",
+      "LICENSE",
+      "state.json",
+      ".nojekyll",
+      ".gitignore",
+      "docs/ARCHITECTURE.md",
+      "docs/TESTING.md",
+      "scripts/check.mjs",
+      ".github/workflows/ci.yml",
+      "assets/hero.jpg",
+      "assets/academy.jpg",
+      "assets/puzzles.jpg",
+      "assets/mobile.jpg"
+    ]
+  },
+  "verification": {
+    "method": "Node verification suite plus headless Chrome over the DevTools Protocol",
+    "automatedChecks": 77,
+    "checks": [
+      "Perft start position depths 1-4: 20 / 400 / 8902 / 197281",
+      "Kiwipete depths 1-2: 48 / 2039",
+      "En passant, castling (king and rook placement), all four promotions",
+      "Five puzzle FENs legal; expected moves verified; mates and checks confirmed",
+      "English/Thai dictionaries symmetric at 163 keys; every data-i18n and t() key exists",
+      "Real pointer clicks on e2/e4 and on a flipped board",
+      "Promotion modal, checkmate end modal, blunder guard modal and Undo & learn",
+      "Puzzle wrong move rejected before commit; hint, solve, streak and best updated",
+      "EN/TH switch across controls, inspector, coach and puzzle content",
+      "localStorage reload restores moves, clocks, language and puzzle progress",
+      "390 x 844 mobile viewport: no horizontal overflow",
+      "Live GitHub Pages page and all assets return HTTP 200"
+    ],
+    "consoleErrors": 0
+  },
+  "deployment": {
+    "repository": "https://github.com/somphol/isometric-chess-academy",
+    "pages": "https://somphol.github.io/isometric-chess-academy/",
+    "host": "GitHub Pages",
+    "branch": "main",
+    "path": "/",
+    "verifiedAt": "2026-11-03T04:04:49.480142Z",
+    "status": "live"
+  },
+  "credits": {
+    "tool": "OpenCode",
+    "toolURL": "https://opencode.ai",
+    "model": "DeepSeek V4.1 Flash",
+    "modelID": "opencode-go/deepseek-v4.1-flash",
+    "license": "MIT"
+  }
+}

@@ -7,7 +7,7 @@ node --check script.js
 node scripts/check.mjs
 ```
 
-`scripts/check.mjs` has no dependencies and currently runs 70 checks:
+`scripts/check.mjs` has no dependencies and currently runs 77 checks (70 app checks, plus 7 state-file checks once `state.json` exists):
 
 | Area | What is checked |
 |------|-----------------|
