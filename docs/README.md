@@ -25,7 +25,7 @@ The project has one page of runtime code but more than one audience. Start with 
 
 | Document | Scope |
 |----------|-------|
-| [REPRODUCTION.md](REPRODUCTION.md) | Requirements matrix, 13-stage rebuild recipe, engine/renderer/UI contracts, verification, deployment and handoff checklist |
+| [REPRODUCTION.md](REPRODUCTION.md) | Requirements matrix, stage-by-stage rebuild recipe, engine/renderer/UI contracts, verification, deployment and handoff checklist |
 | [PROVENANCE.md](PROVENANCE.md) | Original brief, clarifications, session/tool record, credential paths, release history, what was not done |
 | [DECISIONS.md](DECISIONS.md) | ADR log for ruleset, projection, language isolation, storage, credentials and release process |
 | [MANIFEST.sha256](MANIFEST.sha256) | Exact SHA-256 hashes for source files and screenshots |

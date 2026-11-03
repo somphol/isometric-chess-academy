@@ -138,7 +138,7 @@ node scripts/check.mjs
 | Document | What it covers |
 |----------|----------------|
 | [docs/README.md](docs/README.md) | Documentation index by audience, conventions and health checks |
-| [docs/REPRODUCTION.md](docs/REPRODUCTION.md) | Complete build book: requirements, 13-stage rebuild recipe, engine/renderer/UI contracts, checksums and handoff checklist |
+| [docs/REPRODUCTION.md](docs/REPRODUCTION.md) | Complete build book: requirements, stage-by-stage rebuild recipe, engine/renderer/UI contracts, checksums and handoff checklist |
 | [docs/PROVENANCE.md](docs/PROVENANCE.md) | Original brief, late clarifications, session record, credential handling, release history |
 | [docs/DECISIONS.md](docs/DECISIONS.md) | ADR log: why Western chess, fixed 2.5D, no dependencies, language isolation, credential strategy and more |
 | [docs/MANIFEST.sha256](docs/MANIFEST.sha256) | SHA-256 checksums for the three source files and release screenshots |
