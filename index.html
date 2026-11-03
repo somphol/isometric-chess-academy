@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Isometric Chess Academy &amp; Studio</title>
+<meta name="description" content="A bilingual 2.5D isometric chess academy: full rules, beginner coaching, blunder guard, five puzzle drills, synthesized audio and offline progress saving. No frameworks, no build step.">
+<meta name="theme-color" content="#0d141d">
+<meta property="og:title" content="Isometric Chess Academy &amp; Studio">
+<meta property="og:description" content="Learn chess on a hand-drawn 2.5D isometric board. Bilingual EN/TH coaching, blunder guard and five beginner puzzle drills.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230d141d'/%3E%3Cpath d='M22 48h20l-2-7H24z' fill='%2300e5ff'/%3E%3Cpath d='M32 12c-7 6-9 12-7 18l-3 4h20l-3-4c2-6 0-12-7-18zm0 5 3 6-3 4-3-4z' fill='%23f4e9d4'/%3E%3Ccircle cx='32' cy='15' r='3' fill='%2300e5ff'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip-link" href="#board" data-i18n="a11y.skip">Skip to the board</a>
+
+<div class="app">
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 48 48" width="34" height="34" role="presentation">
+          <path d="M14 40h20l-2-6H16z" fill="#00e5ff" opacity=".9"/>
+          <path d="M24 6c-7 5.5-9.4 12-7.4 18.2L13 31h22l-3.6-6.8C33.4 18 31 11.5 24 6z" fill="#f4e9d4"/>
+          <path d="M24 12.5 27.5 19 24 24l-3.5-5z" fill="#0d141d" opacity=".6"/>
+          <circle cx="24" cy="9" r="2.6" fill="#00e5ff"/>
+        </svg>
+      </div>
+      <div class="brand-copy">
+        <h1 data-i18n="app.title">Isometric Chess Academy &amp; Studio</h1>
+        <p data-i18n="app.subtitle">Learn the royal game on a hand-built 2.5D board.</p>
+      </div>
+    </div>
+    <div class="top-actions">
+      <button id="langBtn" class="lang-toggle" type="button" aria-label="Switch language" data-i18n-aria="a11y.lang">
+        <span class="lang-opt" data-lang="en">EN</span>
+        <span class="lang-sep" aria-hidden="true">⇄</span>
+        <span class="lang-opt" data-lang="th">TH</span>
+      </button>
+      <button id="soundBtn" class="icon-btn" type="button" aria-pressed="true" aria-label="Toggle sound" data-i18n-aria="a11y.sound" title="Sound">
+        <span id="soundIcon" aria-hidden="true">🔊</span>
+      </button>
+      <button id="newGameBtn" class="btn btn-primary" type="button">
+        <span aria-hidden="true">✦</span> <span data-i18n="btn.newGame">New game</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="board-panel" aria-label="Chess board">
+      <div class="board-frame" id="boardFrame">
+        <canvas id="board" width="900" height="780" tabindex="0" role="application"
+                aria-label="Isometric chess board. Click a piece, then a highlighted square to move."
+                data-i18n-aria="a11y.board"></canvas>
+        <div class="board-tag board-tag-left">
+          <span class="dot" aria-hidden="true"></span>
+          <span id="modeBadge" data-i18n="mode.casual">Casual play</span>
+        </div>
+        <div class="board-tag board-tag-right" id="academyTag">
+          <span aria-hidden="true">🎓</span> <span data-i18n="mode.academy">Academy</span>
+        </div>
+        <div class="board-toast" id="boardToast" role="status" aria-live="polite"></div>
+
+        <div class="modal-layer hidden" id="promotionModal" role="dialog" aria-modal="true" aria-labelledby="promoTitle">
+          <div class="modal-card promo-card">
+            <p class="eyebrow" data-i18n="promo.eyebrow">Pawn reached the last rank</p>
+            <h2 id="promoTitle" data-i18n="promo.title">Promote your pawn</h2>
+            <div class="promo-grid">
+              <button class="promo-choice" type="button" data-promo="q">
+                <span class="promo-glyph" data-glyph="wq" aria-hidden="true">♕</span>
+                <span data-i18n="piece.queen">Queen</span>
+              </button>
+              <button class="promo-choice" type="button" data-promo="r">
+                <span class="promo-glyph" data-glyph="wr" aria-hidden="true">♖</span>
+                <span data-i18n="piece.rook">Rook</span>
+              </button>
+              <button class="promo-choice" type="button" data-promo="b">
+                <span class="promo-glyph" data-glyph="wb" aria-hidden="true">♗</span>
+                <span data-i18n="piece.bishop">Bishop</span>
+              </button>
+              <button class="promo-choice" type="button" data-promo="n">
+                <span class="promo-glyph" data-glyph="wn" aria-hidden="true">♘</span>
+                <span data-i18n="piece.knight">Knight</span>
+              </button>
+            </div>
+            <p class="modal-note" data-i18n="promo.note">Most players choose a queen. A knight can be stronger in rare endings.</p>
+          </div>
+        </div>
+
+        <div class="modal-layer hidden" id="learnModal" role="dialog" aria-modal="true" aria-labelledby="learnTitle">
+          <div class="modal-card">
+            <p class="eyebrow" id="learnEyebrow" data-i18n="learn.eyebrow">Coach's note</p>
+            <h2 id="learnTitle">Blunder detected</h2>
+            <div class="learn-body" id="learnBody"></div>
+            <div class="modal-actions">
+              <button class="btn btn-primary" id="learnUndo" type="button" data-i18n="btn.undoLearn">Undo &amp; learn</button>
+              <button class="btn btn-ghost" id="learnClose" type="button" data-i18n="btn.keep">Keep the move</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-layer hidden" id="endModal" role="dialog" aria-modal="true" aria-labelledby="endTitle">
+          <div class="modal-card">
+            <p class="eyebrow" data-i18n="end.eyebrow">Game complete</p>
+            <h2 id="endTitle">Checkmate</h2>
+            <p class="end-text" id="endText"></p>
+            <div class="end-stats" id="endStats"></div>
+            <div class="modal-actions">
+              <button class="btn btn-primary" id="endNew" type="button" data-i18n="btn.playAgain">Play again</button>
+              <button class="btn btn-ghost" id="endReview" type="button" data-i18n="btn.review">Review board</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-layer hidden" id="puzzleModal" role="dialog" aria-modal="true" aria-labelledby="puzzleTitle">
+          <div class="modal-card">
+            <p class="eyebrow" id="puzzleEyebrow" data-i18n="puzzles.solvedEyebrow">Puzzle solved</p>
+            <h2 id="puzzleTitle">Lovely work</h2>
+            <p class="end-text" id="puzzleText"></p>
+            <div class="lesson-box" id="puzzleLesson"></div>
+            <div class="modal-actions">
+              <button class="btn btn-primary" id="puzzleNext" type="button" data-i18n="puzzles.next">Next puzzle</button>
+              <button class="btn btn-ghost" id="puzzleBack" type="button" data-i18n="puzzles.backToGame">Back to game</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="clock-strip">
+        <div class="clock-card clock-black" id="clockBlackCard">
+          <span class="clock-color" aria-hidden="true">●</span>
+          <div>
+            <span class="clock-label" data-i18n="side.black">Black</span>
+            <span class="clock-time" id="clockBlack">10:00</span>
+          </div>
+          <span class="clock-turn" id="clockBlackTurn" data-i18n="clock.toMove">to move</span>
+        </div>
+        <div class="turn-pill" id="turnPill">
+          <span class="turn-dot" aria-hidden="true"></span>
+          <span id="turnText" data-i18n="turn.white">White to move</span>
+        </div>
+        <div class="clock-card clock-white is-active" id="clockWhiteCard">
+          <span class="clock-color" aria-hidden="true">○</span>
+          <div>
+            <span class="clock-label" data-i18n="side.white">White</span>
+            <span class="clock-time" id="clockWhite">10:00</span>
+          </div>
+          <span class="clock-turn" id="clockWhiteTurn" data-i18n="clock.toMove">to move</span>
+        </div>
+      </div>
+
+      <div class="board-controls" role="group" aria-label="Game controls">
+        <button id="undoBtn" class="btn btn-soft" type="button" disabled>
+          <span aria-hidden="true">↶</span> <span data-i18n="btn.undo">Undo</span>
+        </button>
+        <button id="guardBtn" class="btn btn-soft is-on" type="button" aria-pressed="true">
+          <span aria-hidden="true">🛡</span> <span data-i18n="btn.guard">Blunder guard</span>
+        </button>
+        <button id="flipBtn" class="btn btn-soft" type="button">
+          <span aria-hidden="true">⇅</span> <span data-i18n="btn.flip">Flip board</span>
+        </button>
+        <button id="exportPgnBtn" class="btn btn-soft" type="button">
+          <span aria-hidden="true">💾</span> <span data-i18n="btn.exportPgn">Export PGN</span>
+        </button>
+        <button id="exportJsonBtn" class="btn btn-soft" type="button">
+          <span aria-hidden="true">🧾</span> <span data-i18n="btn.exportJson">Export JSON</span>
+        </button>
+        <button id="resetBtn" class="btn btn-soft" type="button">
+          <span aria-hidden="true">⟲</span> <span data-i18n="btn.reset">Reset</span>
+        </button>
+      </div>
+    </section>
+
+    <aside class="sidebar" aria-label="Academy panel">
+      <nav class="tabs" role="tablist" aria-label="Studio sections">
+        <button class="tab is-active" id="tabBtnPlay" role="tab" aria-selected="true" aria-controls="tabPlay" data-tab="play" type="button">
+          <span aria-hidden="true">♟</span> <span data-i18n="tab.play">Play</span>
+        </button>
+        <button class="tab" id="tabBtnAcademy" role="tab" aria-selected="false" aria-controls="tabAcademy" data-tab="academy" type="button">
+          <span aria-hidden="true">🎓</span> <span data-i18n="tab.academy">Academy</span>
+        </button>
+        <button class="tab" id="tabBtnPuzzles" role="tab" aria-selected="false" aria-controls="tabPuzzles" data-tab="puzzles" type="button">
+          <span aria-hidden="true">🧩</span> <span data-i18n="tab.puzzles">Puzzles</span>
+        </button>
+      </nav>
+
+      <div class="tab-panel is-active" id="tabPlay" role="tabpanel" aria-labelledby="tabBtnPlay" data-panel="play">
+        <section class="coach-card" aria-live="polite">
+          <div class="coach-head">
+            <div class="coach-avatar" aria-hidden="true">♞</div>
+            <div class="coach-title">
+              <h2 data-i18n="coach.title">Coach's corner</h2>
+              <p data-i18n="coach.subtitle">Gentle nudges, never a lecture.</p>
+            </div>
+            <label class="switch" title="Learning mode">
+              <input type="checkbox" id="learnToggle" checked>
+              <span class="switch-track" aria-hidden="true"><span class="switch-thumb"></span></span>
+              <span class="sr-only" data-i18n="coach.learningMode">Learning mode</span>
+            </label>
+          </div>
+          <p class="coach-line coach-en" id="coachEn">Control the four centre squares: e4, d4, e5 and d5.</p>
+          <p class="coach-line coach-th" id="coachTh">ควบคุมช่องกลางทั้งสี่: e4, d4, e5 และ d5</p>
+          <div class="coach-foot">
+            <span class="coach-pill" id="coachMood">Beginner friendly</span>
+            <span class="coach-pill ghost" id="coachMove">Move 1</span>
+          </div>
+        </section>
+
+        <section class="panel-card piece-peek hidden" id="piecePeek">
+          <div class="peek-head">
+            <div class="peek-glyph" id="peekGlyph" aria-hidden="true">♘</div>
+            <div class="peek-copy">
+              <p class="eyebrow" id="peekSide">White</p>
+              <h3 id="peekName">Knight</h3>
+            </div>
+            <span class="peek-value" id="peekValue">3</span>
+          </div>
+          <p class="peek-move" id="peekMove"></p>
+          <button class="mini-link" id="peekMore" type="button">
+            <span data-i18n="academy.fullLesson">Full lesson</span> <span aria-hidden="true">→</span>
+          </button>
+        </section>
+
+        <section class="panel-card status-card">
+          <div class="panel-head">
+            <h3 data-i18n="status.title">Position</h3>
+            <span class="mini-tag" id="statusTag" data-i18n="status.normal">Normal</span>
+          </div>
+          <div class="eval-row">
+            <div class="eval-item">
+              <span data-i18n="status.material">Material</span>
+              <strong id="materialText">Even</strong>
+            </div>
+            <div class="eval-item">
+              <span data-i18n="status.moves">Moves</span>
+              <strong id="moveCount">0</strong>
+            </div>
+            <div class="eval-item">
+              <span data-i18n="status.phase">Phase</span>
+              <strong id="phaseText" data-i18n="phase.opening">Opening</strong>
+            </div>
+          </div>
+          <div class="eval-bar" aria-hidden="true">
+            <span class="eval-bar-white" id="evalBarWhite" style="width:50%"></span>
+          </div>
+          <div class="captured-row">
+            <span class="captured-label" data-i18n="status.captured">Captured</span>
+            <div class="captured-set" id="capturedByWhite" aria-label="Black pieces captured by White"></div>
+            <span class="captured-vs">·</span>
+            <div class="captured-set captured-dark" id="capturedByBlack" aria-label="White pieces captured by Black"></div>
+          </div>
+        </section>
+
+        <section class="panel-card history-card">
+          <div class="panel-head">
+            <h3 data-i18n="history.title">Move history</h3>
+            <span class="mini-tag" id="historyCount">0 ply</span>
+          </div>
+          <div class="history-scroll" id="historyScroll">
+            <table class="history-table" aria-label="Move history in algebraic notation">
+              <thead>
+                <tr><th data-i18n="history.no">#</th><th data-i18n="side.white">White</th><th data-i18n="side.black">Black</th></tr>
+              </thead>
+              <tbody id="historyBody"></tbody>
+            </table>
+            <p class="empty-note" id="historyEmpty" data-i18n="history.empty">No moves yet. White begins — try e4 or d4.</p>
+          </div>
+        </section>
+      </div>
+
+      <div class="tab-panel" id="tabAcademy" role="tabpanel" aria-labelledby="tabBtnAcademy" data-panel="academy" hidden>
+        <section class="panel-card academy-intro">
+          <div class="panel-head">
+            <h3 data-i18n="academy.title">Piece inspector</h3>
+            <span class="mini-tag" data-i18n="academy.tag">Academy</span>
+          </div>
+          <p class="panel-copy" data-i18n="academy.intro">Click any piece on the board, or choose one below. Its history, value and movement light up on the board.</p>
+          <div class="piece-grid" id="pieceGrid">
+            <button type="button" class="piece-chip" data-inspect="p"><span aria-hidden="true">♙</span><span data-i18n="piece.pawn">Pawn</span></button>
+            <button type="button" class="piece-chip" data-inspect="n"><span aria-hidden="true">♘</span><span data-i18n="piece.knight">Knight</span></button>
+            <button type="button" class="piece-chip" data-inspect="b"><span aria-hidden="true">♗</span><span data-i18n="piece.bishop">Bishop</span></button>
+            <button type="button" class="piece-chip" data-inspect="r"><span aria-hidden="true">♖</span><span data-i18n="piece.rook">Rook</span></button>
+            <button type="button" class="piece-chip" data-inspect="q"><span aria-hidden="true">♕</span><span data-i18n="piece.queen">Queen</span></button>
+            <button type="button" class="piece-chip" data-inspect="k"><span aria-hidden="true">♔</span><span data-i18n="piece.king">King</span></button>
+          </div>
+        </section>
+
+        <section class="panel-card inspector-card" id="inspectorCard">
+          <div class="inspector-empty" id="inspectorEmpty">
+            <div class="empty-orbit" aria-hidden="true"><span>♞</span></div>
+            <h3 data-i18n="academy.pick">Pick a piece to begin</h3>
+            <p data-i18n="academy.pickBody">Every piece has a personality, a point value and a story. The board will show its paths.</p>
+          </div>
+          <div class="inspector-body hidden" id="inspectorBody">
+            <div class="inspector-hero">
+              <div class="inspector-glyph" id="inspectorGlyph" aria-hidden="true">♙</div>
+              <div>
+                <p class="eyebrow" id="inspectorSide" data-i18n="side.white">White</p>
+                <h3 id="inspectorName">Pawn</h3>
+                <p class="inspector-value"><span data-i18n="academy.value">Point value</span> <strong id="inspectorValue">1</strong></p>
+              </div>
+            </div>
+            <div class="lesson-box">
+              <h4 data-i18n="academy.movement">How it moves</h4>
+              <p id="inspectorMove"></p>
+            </div>
+            <div class="lesson-box">
+              <h4 data-i18n="academy.role">Its role</h4>
+              <p id="inspectorRole"></p>
+            </div>
+            <div class="lesson-box history-box">
+              <h4 data-i18n="academy.story">A little history</h4>
+              <p id="inspectorHistory"></p>
+            </div>
+            <div class="inspector-tip">
+              <span aria-hidden="true">💡</span>
+              <p id="inspectorTip"></p>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel-card">
+          <div class="panel-head"><h3 data-i18n="academy.lessons">Three quiet rules</h3></div>
+          <ul class="rule-list">
+            <li><span class="rule-num">01</span><p data-i18n="academy.rule1">Develop before you attack. Knights and bishops first, queen later.</p></li>
+            <li><span class="rule-num">02</span><p data-i18n="academy.rule2">Castle by move ten when you can. A safe king is worth more than a pawn.</p></li>
+            <li><span class="rule-num">03</span><p data-i18n="academy.rule3">Before every move, ask what your opponent threatens — not what you hope.</p></li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="tab-panel" id="tabPuzzles" role="tabpanel" aria-labelledby="tabBtnPuzzles" data-panel="puzzles" hidden>
+        <section class="panel-card puzzles-head">
+          <div class="panel-head">
+            <h3 data-i18n="puzzles.title">Mini-puzzle drills</h3>
+            <span class="mini-tag" id="puzzleProgress">0 / 5</span>
+          </div>
+          <p class="panel-copy" data-i18n="puzzles.intro">Five calm little puzzles, loaded from local JSON. Each one teaches a single idea you will use in real games.</p>
+          <div class="streak-row">
+            <div class="streak-item"><span data-i18n="puzzles.streak">Current streak</span><strong id="puzzleStreak">0</strong></div>
+            <div class="streak-item"><span data-i18n="puzzles.best">Best streak</span><strong id="puzzleBest">0</strong></div>
+            <div class="streak-item"><span data-i18n="puzzles.attempts">Attempts</span><strong id="puzzleAttempts">0</strong></div>
+          </div>
+        </section>
+
+        <div class="puzzle-list" id="puzzleList"></div>
+
+        <section class="panel-card puzzle-active hidden" id="puzzleActive">
+          <div class="panel-head">
+            <h3 id="puzzleActiveTitle">Back-rank mate</h3>
+            <button class="mini-link" id="puzzleExit" type="button" data-i18n="puzzles.backToGame">Back to game</button>
+          </div>
+          <p class="panel-copy" id="puzzleActiveGoal"></p>
+          <div class="puzzle-toolbar">
+            <button class="btn btn-soft" id="puzzleHintBtn" type="button"><span aria-hidden="true">💡</span> <span data-i18n="puzzles.hint">Hint</span></button>
+            <button class="btn btn-soft" id="puzzleResetBtn" type="button"><span aria-hidden="true">⟲</span> <span data-i18n="puzzles.retry">Retry</span></button>
+            <span class="mini-tag" id="puzzleTurnTag" data-i18n="puzzles.yourTurn">Your turn</span>
+          </div>
+          <div class="hint-box hidden" id="puzzleHintBox"></div>
+          <div class="lesson-box solution-box hidden" id="puzzleSolutionBox">
+            <h4 data-i18n="puzzles.solution">The idea</h4>
+            <p id="puzzleSolutionText"></p>
+          </div>
+        </section>
+
+        <section class="panel-card">
+          <div class="panel-head"><h3 data-i18n="puzzles.why">Why puzzles work</h3></div>
+          <p class="panel-copy" data-i18n="puzzles.whyBody">Patterns are chess vocabulary. Five minutes a day trains your eye to notice a back rank, a loose piece or a knight fork before it costs you a game.</p>
+        </section>
+      </div>
+
+      <div class="sidebar-foot">
+        <span data-i18n="foot.saved">Progress saves in this browser</span>
+        <button class="mini-link" id="clearBtn" type="button" data-i18n="foot.clear">Clear saved data</button>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="footer">
+    <p>
+      <span data-i18n="foot.built">Built by</span>
+      <a href="https://opencode.ai" target="_blank" rel="noopener">OpenCode</a>
+      <span data-i18n="foot.with">with</span>
+      <strong>DeepSeek V4.1 Flash</strong>
+      <span class="footer-sep">·</span>
+      <span data-i18n="foot.offline">One page, no frameworks, no network.</span>
+    </p>
+    <p class="footer-meta">v1.0.0 · MIT · <a href="https://github.com/somphol/isometric-chess-academy" target="_blank" rel="noopener">GitHub</a></p>
+  </footer>
+</div>
+
+<noscript>
+  <div class="noscript-note">This studio needs JavaScript. The board, coaching and puzzle drills all run locally in your browser.</div>
+</noscript>
+
+<script type="application/json" id="puzzle-data">
+[
+  {
+    "id": "back-rank",
+    "level": 1,
+    "title": { "en": "Back-rank mate", "th": "รุกจนที่แถวหลัง" },
+    "goal": {
+      "en": "Black's king is trapped behind its own pawns. Find mate in one.",
+      "th": "ราชาดำติดอยู่หลังเบี้ยของตัวเอง หาทางรุกจนในหมากเดียว"
+    },
+    "hint": {
+      "en": "The queen can see the whole eighth rank. Which square gives check no pawn can block?",
+      "th": "ควีนมองเห็นแถวที่ 8 ทั้งแถว ช่องใดให้เช็คที่เบี้ยปิดไม่ได้?"
+    },
+    "success": {
+      "en": "Qd8# — the queen slides to the back rank and the king has no square left.",
+      "th": "Qd8# — ควีนเลื่อนไปแถวหลังและราชาไม่มีช่องหนีเหลือ"
+    },
+    "lesson": {
+      "en": "A castled king can still be mated if the pawns in front never move. This is why one pawn push — a luft — is often worth making.",
+      "th": "ราชาที่เข้าปราสาทแล้วยังถูกจนได้ ถ้าเบี้ยด้านหน้าไม่ขยับ การเดินเบี้ยหนึ่งช่องเพื่อเปิดช่องหนีจึงมีค่า"
+    },
+    "fen": "6k1/5ppp/8/8/8/8/5PPP/3Q2K1 w - - 0 1",
+    "expected": { "from": "d1", "to": "d8", "mate": true }
+  },
+  {
+    "id": "ladder-mate",
+    "level": 1,
+    "title": { "en": "The ladder mate", "th": "รุกจนบันไดคู่" },
+    "goal": {
+      "en": "Two rooks can climb like a ladder. Deliver mate in one with the rook on b1.",
+      "th": "เรือสองตัวไล่บันไดได้ จงรุกจนในหมากเดียวด้วยเรือที่ b1"
+    },
+    "hint": {
+      "en": "One rook cuts the seventh rank. Send the other to the eighth.",
+      "th": "เรือตัวหนึ่งคุมแถวที่ 7 ส่งอีกตัวไปแถวที่ 8"
+    },
+    "success": {
+      "en": "Rb8# — the eighth-rank rook checks, and the seventh-rank rook covers every escape.",
+      "th": "Rb8# — เรือแถวที่ 8 รุก และเรือแถวที่ 7 คุมช่องหนีทั้งหมด"
+    },
+    "lesson": {
+      "en": "Rooks are strongest on open ranks. Two of them working one rank apart form a cage the king cannot leave.",
+      "th": "เรือแข็งแรงที่สุดบนแถวเปิด เรือสองตัวที่ทำงานห่างกันหนึ่งแถวจะสร้างกรงที่ราชาออกไม่ได้"
+    },
+    "fen": "7k/R7/8/8/8/8/8/1R4K1 w - - 0 1",
+    "expected": { "from": "b1", "to": "b8", "mate": true }
+  },
+  {
+    "id": "save-bishop",
+    "level": 1,
+    "title": { "en": "Save the bishop", "th": "ช่วยบิชอป" },
+    "goal": {
+      "en": "A black pawn is attacking your bishop on c4. Capture the attacker.",
+      "th": "เบี้ยดำกำลังโจมตีบิชอปของคุณที่ c4 จงกินตัวที่โจมตี"
+    },
+    "hint": {
+      "en": "Bishops move on diagonals. The pawn on b5 is one diagonal step away.",
+      "th": "บิชอปเดินทแยง เบี้ยที่ b5 อยู่ห่างหนึ่งก้าวทแยง"
+    },
+    "success": {
+      "en": "Bxb5! The bishop removes the pawn that was attacking it and stays safe.",
+      "th": "Bxb5! บิชอปกินเบี้ยที่โจมตีมัน และปลอดภัย"
+    },
+    "lesson": {
+      "en": "When a piece is attacked, you have three choices: move it, defend it, or capture the attacker. The cheapest option is often the capture.",
+      "th": "เมื่อหมากถูกโจมตี มีสามทางเลือก: เดินหนี ป้องกัน หรือกินตัวที่โจมตี ทางที่ถูกที่สุดมักคือการกิน"
+    },
+    "fen": "6k1/5p2/8/1p6/2B5/8/5PPP/6K1 w - - 0 1",
+    "expected": { "from": "c4", "to": "b5" }
+  },
+  {
+    "id": "royal-fork",
+    "level": 2,
+    "title": { "en": "The royal fork", "th": "อัศวินสองง่าม" },
+    "goal": {
+      "en": "The black queen is loose. Find the knight move that checks the king and attacks the queen at once.",
+      "th": "ควีนดำลอยลำอยู่ หาการเดินอัศวินที่รุกและโจมตีควีนพร้อมกัน"
+    },
+    "hint": {
+      "en": "From d5, the knight can reach f6. What does a knight on f6 attack?",
+      "th": "จาก d5 อัศวินไป f6 ได้ อัศวินที่ f6 โจมตีอะไรบ้าง?"
+    },
+    "success": {
+      "en": "Nf6+! The king must move, and the queen on d7 falls next move.",
+      "th": "Nf6+! ราชาต้องขยับ และควีนที่ d7 จะถูกกินในหมากถัดไป"
+    },
+    "lesson": {
+      "en": "A fork works because the king must answer the check. Look for squares where one knight touches two valuable targets.",
+      "th": "การแทงสองง่ามได้ผลเพราะราชาต้องแก้เช็คก่อน มองหาช่องที่อัศวินตัวเดียวแตะเป้าหมายมีค่าสองอย่าง"
+    },
+    "fen": "6k1/3q4/8/3N4/8/8/8/6K1 w - - 0 1",
+    "expected": { "from": "d5", "to": "f6", "check": true }
+  },
+  {
+    "id": "castle-home",
+    "level": 2,
+    "title": { "en": "Bring the king home", "th": "พาราชากลับบ้าน" },
+    "goal": {
+      "en": "Your king and rook are still on their starting squares. Castle kingside in one move.",
+      "th": "ราชาและเรือยังอยู่ช่องเริ่มต้น จงเข้าปราสาทด้านราชาในหมากเดียว"
+    },
+    "hint": {
+      "en": "Move the king two squares toward the h-file rook. The rook jumps over to f1.",
+      "th": "เดินราชาสองช่องไปทางเรือฝั่ง h เรือจะกระโดดมาที่ f1"
+    },
+    "success": {
+      "en": "O-O — the king reaches g1, the rook takes f1, and both become active and safe.",
+      "th": "O-O — ราชาไป g1 เรือมาที่ f1 ทั้งคู่ปลอดภัยและทำงานได้"
+    },
+    "lesson": {
+      "en": "Castling is the only move that moves two pieces at once. It hides the king and brings a sleepy rook into the game.",
+      "th": "การเข้าปราสาทเป็นการเดินเดียวที่ขยับหมากสองตัวพร้อมกัน ช่วยซ่อนราชาและปลุกเรือที่หลับอยู่"
+    },
+    "fen": "4k3/8/8/8/8/8/5PPP/4K2R w K - 0 1",
+    "expected": { "from": "e1", "to": "g1", "castle": "K" }
+  }
+]
+</script>
+
+<script src="script.js"></script>
+</body>
+</html>
