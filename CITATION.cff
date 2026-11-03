@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+message: "If you use this software in teaching, research or a course, please cite it as below."
+title: "Isometric Chess Academy & Studio"
+abstract: >-
+  A dependency-free, offline, bilingual chess studio in one HTML page.
+  It provides full international chess rules on a 2.5D isometric Canvas
+  board, a piece inspector, a language-aware beginner coach, a blunder
+  guard with explanatory undo, five puzzle drills, synthesized Web Audio,
+  localStorage persistence and PGN/JSON export.
+authors:
+  - family-names: "Boonjing"
+    given-names: "Somphol"
+    alias: "somphol"
+    website: "https://github.com/somphol"
+version: "1.0.0"
+date-released: "2026-11-02"
+license: "MIT"
+repository-code: "https://github.com/somphol/isometric-chess-academy"
+url: "https://somphol.github.io/isometric-chess-academy/"
+type: software
+keywords:
+  - chess
+  - isometric
+  - chess-education
+  - vanillajs
+  - html5-canvas
+  - bilingual
+  - thai
+  - beginner
+  - puzzles
+  - offline

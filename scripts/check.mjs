@@ -66,6 +66,55 @@ check('CSS has isometric palette', css.includes('#00e5ff') && css.includes('#00e
 check('CSS hides the Thai coach line in English mode', /html\[lang="en"\] \.coach-th/.test(css));
 check('CSS hides the English coach line in Thai mode', /html\[lang="th"\] \.coach-en/.test(css));
 
+section('Release documentation');
+const requiredDocs = [
+  'README.md', 'CHANGELOG.md', 'CONTRIBUTING.md', 'CODE_OF_CONDUCT.md',
+  'SECURITY.md', 'SUPPORT.md', 'ROADMAP.md', 'CITATION.cff',
+  'THIRD_PARTY_NOTICES.md', 'docs/README.md', 'docs/ARCHITECTURE.md', 'docs/DESIGN.md',
+  'docs/TESTING.md', 'docs/DEPLOYMENT.md', 'docs/ACCESSIBILITY.md',
+  'docs/RELEASE.md', 'docs/PRIVACY.md', 'docs/PUZZLES.md', 'docs/FAQ.md',
+  '.github/PULL_REQUEST_TEMPLATE.md', '.github/CODEOWNERS',
+  '.github/ISSUE_TEMPLATE/bug_report.yml', '.github/ISSUE_TEMPLATE/feature_request.yml',
+  '.github/ISSUE_TEMPLATE/config.yml', '.github/dependabot.yml'
+];
+const missingDocs = requiredDocs.filter((rel) => !fs.existsSync(path.join(root, rel)));
+check('release documentation set is present', missingDocs.length === 0, missingDocs.join(', '));
+
+const readme = fs.readFileSync(path.join(root, 'README.md'), 'utf8');
+const missingLinks = requiredDocs.filter((rel) => {
+  if (rel === 'README.md' || rel.startsWith('.github/')) return false;
+  return !readme.includes('](' + rel + ')');
+});
+check('README links the release documentation', missingLinks.length === 0, missingLinks.join(', '));
+
+const changelog = fs.readFileSync(path.join(root, 'CHANGELOG.md'), 'utf8');
+check('CHANGELOG records v1.0.0', /^## \[1\.0\.0\] - 2026-11-02/m.test(changelog));
+const citation = fs.readFileSync(path.join(root, 'CITATION.cff'), 'utf8');
+check('CITATION.cff declares version and repository', citation.includes('version: "1.0.0"') && citation.includes('repository-code:'));
+const security = fs.readFileSync(path.join(root, 'SECURITY.md'), 'utf8');
+check('SECURITY.md offers private reporting', /security\/advisories\/new|Report a vulnerability/i.test(security));
+const conduct = fs.readFileSync(path.join(root, 'CODE_OF_CONDUCT.md'), 'utf8');
+check('CODE_OF_CONDUCT.md cites Contributor Covenant 2.1', /Contributor Covenant[\s\S]*2\.1/.test(conduct));
+
+const markdownFiles = [
+  'README.md', 'AGENTS.md', 'CHANGELOG.md', 'CONTRIBUTING.md', 'CODE_OF_CONDUCT.md',
+  'SECURITY.md', 'SUPPORT.md', 'ROADMAP.md', 'THIRD_PARTY_NOTICES.md',
+  ...fs.readdirSync(path.join(root, 'docs')).filter((f) => f.endsWith('.md')).map((f) => 'docs/' + f)
+];
+const brokenLinks = [];
+for (const rel of markdownFiles) {
+  const file = path.join(root, rel);
+  const text = fs.readFileSync(file, 'utf8');
+  for (const m of text.matchAll(/\]\(([^)\s]+)(?:\s+"[^"]*")?\)/g)) {
+    const link = m[1];
+    if (/^(https?:|mailto:|#|data:)/i.test(link)) continue;
+    const clean = decodeURIComponent(link.split('#')[0].split('?')[0]);
+    if (!clean) continue;
+    if (!fs.existsSync(path.resolve(path.dirname(file), clean))) brokenLinks.push(rel + ' -> ' + link);
+  }
+}
+check('relative Markdown links resolve', brokenLinks.length === 0, brokenLinks.slice(0, 6).join(', '));
+
 section('i18n symmetry');
 const en = Object.keys(E.i18n.en);
 const th = Object.keys(E.i18n.th);

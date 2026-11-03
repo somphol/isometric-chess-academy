@@ -1,0 +1,56 @@
+name: Request a feature
+description: Propose a teaching improvement, puzzle pack, accessibility fix, or documentation change.
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This is a small, dependency-free, offline teaching app. The strongest proposals solve a specific beginner problem and fit that constraint.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What teaching or usability problem does this solve?
+      placeholder: "A beginner cannot tell which piece is attacking their king."
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What is the smallest useful version?
+      description: Describe the interaction, not only the feature name.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Could the coach, a puzzle, or a documentation change solve this instead?
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Coach / blunder guard
+        - Puzzle drills
+        - Board rendering or controls
+        - Accessibility
+        - Language / translation
+        - Documentation
+        - Release / tooling
+        - Other
+    validations:
+      required: true
+  - type: checkboxes
+    id: constraints
+    attributes:
+      label: Project constraints
+      options:
+        - label: It can work offline, with no runtime network calls.
+          required: true
+        - label: It does not require a framework or build step.
+          required: true
+        - label: It keeps standard international chess rules (not Makruk).
+          required: true
+        - label: I checked ROADMAP.md; this is not already listed as a non-goal.
+          required: true

@@ -1,0 +1,84 @@
+name: Report a bug
+description: Something is broken, unclear, or behaves differently from the docs.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report. Please search existing issues first, and do not include tokens, passwords, or personal data.
+
+        For a security or privacy vulnerability, use the private process in SECURITY.md instead of this form.
+  - type: dropdown
+    id: language
+    attributes:
+      label: Interface language
+      options:
+        - English
+        - Thai / ภาษาไทย
+        - Both / switching
+    validations:
+      required: true
+  - type: dropdown
+    id: context
+    attributes:
+      label: Where did it happen?
+      options:
+        - Live site (somphol.github.io)
+        - Local HTTP server
+        - file:// index.html
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Browser, version and OS
+      placeholder: "Chrome 142, macOS 15.2, MacBook Air"
+    validations:
+      required: true
+  - type: input
+    id: viewport
+    attributes:
+      label: Viewport or device (optional)
+      placeholder: "1440 x 1180 desktop / 390 x 844 phone / 200% zoom"
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Include the board orientation, selected piece and the exact move if relevant.
+      placeholder: |
+        1. Open the live site
+        2. Flip the board
+        3. Select e2 and try e4
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: What happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: console
+    attributes:
+      label: Console output or screenshot
+      description: Paste errors or attach a screenshot. Remove personal data first.
+      render: shell
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I searched existing issues and the FAQ.
+          required: true
+        - label: I removed tokens, passwords, and personal data from this report.
+          required: true
+        - label: This is not a security vulnerability (those go through SECURITY.md).
+          required: true

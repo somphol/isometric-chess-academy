@@ -4,6 +4,11 @@ A complete, offline, bilingual chess studio on a hand-built **2.5D isometric boa
 
 **Version 1.0.0** · [Live demo](https://somphol.github.io/isometric-chess-academy/) · MIT
 
+[![check](https://github.com/somphol/isometric-chess-academy/actions/workflows/ci.yml/badge.svg)](https://github.com/somphol/isometric-chess-academy/actions/workflows/ci.yml)
+[![live](https://img.shields.io/badge/live-GitHub%20Pages-00e5ff)](https://somphol.github.io/isometric-chess-academy/)
+[![license](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
+[![release](https://img.shields.io/badge/release-v1.0.0-00e676)](https://github.com/somphol/isometric-chess-academy/releases/tag/v1.0.0)
+
 ![Isometric Chess Academy & Studio](assets/hero.jpg)
 
 > **This is standard Western chess.** It uses kings, queens, bishops, rooks, knights and pawns with castling, en passant, promotion, checkmate, stalemate and the usual draw rules. Thai is only an interface language — this is **not Makruk** (Thai chess).
@@ -77,6 +82,19 @@ Open <http://localhost:8080>. Opening `index.html` directly also works; the app 
 
 Clicking a piece always opens its inspector card. In the Play tab the compact card links to the full Academy lesson.
 
+## Compatibility
+
+| Surface | Status |
+|---------|--------|
+| Current Chrome | Verified during development and release |
+| Current Safari / Firefox / Edge | Expected to work; manual verification pending |
+| Desktop | 1440 × 1180 verified |
+| Mobile | 390 × 844 verified, no horizontal overflow |
+| Hosting | GitHub Pages, any static host, or `file://` |
+| Build | None; no Node runtime required to use the app |
+
+The board uses standard Canvas 2D, Pointer Events and Web Audio. A browser without JavaScript shows a short notice instead of the studio.
+
 ## Verify
 
 ```bash
@@ -102,6 +120,45 @@ GitHub Pages serves the repository root on `main`. There is no build output and 
 git push origin main
 ```
 
+See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for Pages setup, custom domains, cache behaviour and rollback.
+
+## Contributing
+
+Bug reports, Thai copy review, accessibility findings and verified puzzle proposals are welcome. Start with [CONTRIBUTING.md](CONTRIBUTING.md) and run the checks before opening a pull request.
+
+```bash
+node --check script.js
+node scripts/check.mjs
+```
+
+## Documentation
+
+| Document | What it covers |
+|----------|----------------|
+| [docs/README.md](docs/README.md) | Documentation index by audience, conventions and health checks |
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Board model, engine pipeline, isometric projection, renderer, storage schema, extension recipes |
+| [docs/DESIGN.md](docs/DESIGN.md) | Visual system, semantics, motion, coaching voice, Thai glossary, design review checklist |
+| [docs/TESTING.md](docs/TESTING.md) | Automated checks, headless verification, manual regression matrix, known gaps |
+| [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) | GitHub Pages, custom domain, rollback, cache behaviour, deployment checklist |
+| [docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md) | Keyboard map, colour and focus, verified behaviour, honest gaps, next steps |
+| [docs/RELEASE.md](docs/RELEASE.md) | SemVer policy, version locations, release/hotfix/rollback process, notes template |
+| [docs/PRIVACY.md](docs/PRIVACY.md) | Local storage, exports, hosting logs, clearing data, children's privacy |
+| [docs/PUZZLES.md](docs/PUZZLES.md) | Puzzle ladder, teaching notes, authoring schema and validation rules |
+| [docs/FAQ.md](docs/FAQ.md) | Rules, castling, storage, sound, browsers, classroom use, troubleshooting |
+
+## Community and project
+
+| File | Purpose |
+|------|---------|
+| [CONTRIBUTING.md](CONTRIBUTING.md) | Setup, style, i18n and puzzle contribution rules, pull-request checklist |
+| [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) | Contributor Covenant 2.1 and private enforcement contact |
+| [SECURITY.md](SECURITY.md) | Supported versions, private disclosure, scope, safe harbor |
+| [SUPPORT.md](SUPPORT.md) | Quick fixes, issue templates, what to include, response expectations |
+| [ROADMAP.md](ROADMAP.md) | Shipped work, 1.1 candidates, non-goals |
+| [CHANGELOG.md](CHANGELOG.md) | Release history in Keep a Changelog format |
+| [CITATION.cff](CITATION.cff) | Citation metadata for teaching and research use |
+| [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) | Runtime dependency, artwork, font and licence notices |
+
 ## Project layout
 
 | Path | Purpose |
@@ -113,8 +170,16 @@ git push origin main
 | `scripts/check.mjs` | Dependency-free verification suite |
 | `state.json` | Historical build record: session time, model tokens, deployment |
 | `AGENTS.md` | Handoff notes for the next agent |
-| `docs/ARCHITECTURE.md` | Coordinate system, engine and rendering contract |
-| `docs/TESTING.md` | Verification matrix and manual regression list |
+| `docs/` | Architecture, design, testing, deployment, accessibility, release, privacy, puzzles, FAQ |
+| `CHANGELOG.md` | Release history |
+| `CONTRIBUTING.md` | Development and contribution guide |
+| `SECURITY.md` | Private vulnerability reporting |
+| `SUPPORT.md` | Troubleshooting and issue guidance |
+| `ROADMAP.md` | Direction and non-goals |
+| `CITATION.cff` | Citation metadata |
+| `.github/` | CI, Dependabot, issue forms, PR template, code owners |
+| `.editorconfig` | Editor defaults: UTF-8, LF, two-space indent |
+| `THIRD_PARTY_NOTICES.md` | Dependency and attribution notices |
 
 ## Credits
 
