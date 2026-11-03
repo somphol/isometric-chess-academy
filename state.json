@@ -5,10 +5,10 @@
   "session": {
     "id": "ses_e607f33aaffe8e4SA7JRy9ej1f",
     "startedAt": "2026-11-03T03:43:00.699000Z",
-    "capturedAt": "2026-11-03T04:07:59.577775Z",
-    "elapsedSeconds": 1498,
-    "elapsed": "24m 58s",
-    "note": "Wall-clock time from the OpenCode session's creation to the final capture. The app, repository, CI workflow and live GitHub Pages deployment were already complete and verified at capture time. The state file and its commit were written immediately after."
+    "capturedAt": "2026-11-03T04:14:42.879317Z",
+    "elapsedSeconds": 1902,
+    "elapsed": "31m 42s",
+    "note": "Wall-clock time from the OpenCode session's creation to the final capture. The app, repository, CI workflow and live GitHub Pages deployment (including the selected-language UI fix) were complete and verified at capture time. The state file and its commit were written immediately after."
   },
   "model": {
     "name": "DeepSeek V4.1 Flash",
@@ -16,12 +16,12 @@
     "provider": "opencode-go"
   },
   "usage": {
-    "inputTokens": 504113,
-    "outputTokens": 104339,
-    "reasoningTokens": 86154,
-    "cacheReadTokens": 15819008,
+    "inputTokens": 530834,
+    "outputTokens": 113324,
+    "reasoningTokens": 95105,
+    "cacheReadTokens": 20742272,
     "cacheWriteTokens": 1282,
-    "totalTokens": 16514896,
+    "totalTokens": 21482817,
     "costUSD": 0.0,
     "note": "Read from the OpenCode session database. totalTokens sums all five counters, including cache reads; cache reads are repeated prompt context and dominate the figure. costUSD is 0 on the flat-rate plan."
   },
@@ -33,8 +33,8 @@
     ],
     "lineCounts": {
       "index.html": 518,
-      "style.css": 1087,
-      "script.js": 3628
+      "style.css": 1088,
+      "script.js": 3634
     },
     "supportingFiles": [
       "README.md",
@@ -55,7 +55,7 @@
   },
   "verification": {
     "method": "Node verification suite plus headless Chrome over the DevTools Protocol",
-    "automatedChecks": 77,
+    "automatedChecks": 79,
     "checks": [
       "Perft start position depths 1-4: 20 / 400 / 8902 / 197281",
       "Kiwipete depths 1-2: 48 / 2039",
@@ -68,7 +68,8 @@
       "EN/TH switch across controls, inspector, coach and puzzle content",
       "localStorage reload restores moves, clocks, language and puzzle progress",
       "390 x 844 mobile viewport: no horizontal overflow",
-      "Live GitHub Pages page and all assets return HTTP 200"
+      "Live GitHub Pages page and all assets return HTTP 200",
+      "English mode shows no Thai text (initial, blunder modal, puzzle modal); Thai mode shows no English coach or lesson prose"
     ],
     "consoleErrors": 0
   },
@@ -78,7 +79,7 @@
     "host": "GitHub Pages",
     "branch": "main",
     "path": "/",
-    "verifiedAt": "2026-11-03T04:07:59.577775Z",
+    "verifiedAt": "2026-11-03T04:14:42.879317Z",
     "status": "live"
   },
   "credits": {
