@@ -5,10 +5,10 @@
   "session": {
     "id": "ses_e607f33aaffe8e4SA7JRy9ej1f",
     "startedAt": "2026-11-03T03:43:00.699000Z",
-    "capturedAt": "2026-11-03T04:04:49.480142Z",
-    "elapsedSeconds": 1308,
-    "elapsed": "21m 48s",
-    "note": "Wall-clock time from the OpenCode session's creation to this capture. The app, repository, CI workflow and live GitHub Pages deployment were already complete at capture time. The state file and its commit were written immediately after this capture."
+    "capturedAt": "2026-11-03T04:07:59.577775Z",
+    "elapsedSeconds": 1498,
+    "elapsed": "24m 58s",
+    "note": "Wall-clock time from the OpenCode session's creation to the final capture. The app, repository, CI workflow and live GitHub Pages deployment were already complete and verified at capture time. The state file and its commit were written immediately after."
   },
   "model": {
     "name": "DeepSeek V4.1 Flash",
@@ -16,12 +16,12 @@
     "provider": "opencode-go"
   },
   "usage": {
-    "inputTokens": 492113,
-    "outputTokens": 99870,
-    "reasoningTokens": 81983,
-    "cacheReadTokens": 12617088,
+    "inputTokens": 504113,
+    "outputTokens": 104339,
+    "reasoningTokens": 86154,
+    "cacheReadTokens": 15819008,
     "cacheWriteTokens": 1282,
-    "totalTokens": 13292336,
+    "totalTokens": 16514896,
     "costUSD": 0.0,
     "note": "Read from the OpenCode session database. totalTokens sums all five counters, including cache reads; cache reads are repeated prompt context and dominate the figure. costUSD is 0 on the flat-rate plan."
   },
@@ -34,7 +34,7 @@
     "lineCounts": {
       "index.html": 518,
       "style.css": 1087,
-      "script.js": 3619
+      "script.js": 3628
     },
     "supportingFiles": [
       "README.md",
@@ -78,7 +78,7 @@
     "host": "GitHub Pages",
     "branch": "main",
     "path": "/",
-    "verifiedAt": "2026-11-03T04:04:49.480142Z",
+    "verifiedAt": "2026-11-03T04:07:59.577775Z",
     "status": "live"
   },
   "credits": {
