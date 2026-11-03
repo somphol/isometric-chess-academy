@@ -788,6 +788,8 @@
       'blunder.tipTh': 'ก่อนเดิน ถามตัวเองว่า: หมากตัวนี้ปลอดภัยบนช่องใหม่หรือไม่?',
       'blunder.mateTipEn': 'When you are ahead, check every opponent check and capture. One careless move is enough.',
       'blunder.mateTipTh': 'เมื่อได้เปรียบ ให้ตรวจการเช็คและการกินทุกครั้งของคู่ต่อสู้ เพราะหมากพลาดครั้งเดียวก็พอ',
+      'blunder.tip': 'Before you move, ask: is this piece safe on its new square?',
+      'blunder.mateTip': 'When you are ahead, check every opponent check and capture. One careless move is enough.',
       'blunder.safe': 'The move was undone, so nothing is lost. Look for a developing move, a capture, or a check.',
       'blunder.safeTh': 'ย้อนหมากแล้ว ไม่มีอะไรเสียหาย มองหาการเดินพัฒนาหมาก การกิน หรือการเช็ค',
       'a11y.moveAnnounce': '{side} played {san}.'
@@ -953,7 +955,9 @@
       'blunder.tipTh': 'ก่อนเดิน ถามตัวเองว่า: หมากตัวนี้ปลอดภัยบนช่องใหม่หรือไม่?',
       'blunder.mateTipEn': 'When you are ahead, check every opponent check and capture. One careless move is enough.',
       'blunder.mateTipTh': 'เมื่อได้เปรียบ ให้ตรวจการเช็คและการกินทุกครั้งของคู่ต่อสู้ เพราะหมากพลาดครั้งเดียวก็พอ',
-      'blunder.safe': 'The move was undone, so nothing is lost. Look for a developing move, a capture, or a check.',
+      'blunder.tip': 'ก่อนเดิน ถามตัวเองว่า: หมากตัวนี้ปลอดภัยบนช่องใหม่หรือไม่?',
+      'blunder.mateTip': 'เมื่อได้เปรียบ ให้ตรวจการเช็คและการกินทุกครั้งของคู่ต่อสู้ เพราะหมากพลาดครั้งเดียวก็พอ',
+      'blunder.safe': 'ย้อนหมากแล้ว ไม่มีอะไรเสียหาย มองหาการเดินพัฒนาหมาก การกิน หรือการเช็ค',
       'blunder.safeTh': 'ย้อนหมากแล้ว ไม่มีอะไรเสียหาย มองหาการเดินพัฒนาหมาก การกิน หรือการเช็ค',
       'a11y.moveAnnounce': '{side} เล่น {san}'
     }
@@ -1359,6 +1363,16 @@
     updatePuzzleUI();
     updateButtons();
     renderCoach();
+    if (els.learnModal && !els.learnModal.classList.contains('hidden') && UI.learnContext) {
+      if (UI.learnContext.kind === 'undo') openUndoLearn(UI.learnContext.move);
+      else openBlunderModal(UI.learnContext.move);
+    }
+    if (els.puzzleModal && !els.puzzleModal.classList.contains('hidden') && UI.puzzleModalData) {
+      openPuzzleSolved(UI.puzzleModalData);
+    }
+    if (els.endModal && !els.endModal.classList.contains('hidden') && UI.gameOverInfo) {
+      openEndModal(UI.gameOverInfo);
+    }
     saveState();
   }
 
@@ -2914,22 +2928,19 @@
     els.learnTitle.textContent = t('learn.blunderTitle');
     els.learnBody.innerHTML = '';
     var p1 = document.createElement('p');
-    p1.setAttribute('lang', 'en');
-    p1.textContent = ex.en;
-    var p2 = document.createElement('p');
-    p2.setAttribute('lang', 'th');
-    p2.textContent = ex.th;
+    p1.setAttribute('lang', UI.lang);
+    p1.textContent = UI.lang === 'en' ? ex.en : ex.th;
     var tip = document.createElement('p');
     tip.className = 'learn-tip';
-    tip.textContent = (b.kind === 'mate' ? t('blunder.mateTipEn') : t('blunder.tipEn')) + ' · ' +
-      (b.kind === 'mate' ? t('blunder.mateTipTh') : t('blunder.tipTh'));
+    tip.setAttribute('lang', UI.lang);
+    tip.textContent = b.kind === 'mate' ? t('blunder.mateTip') : t('blunder.tip');
     els.learnBody.appendChild(p1);
-    els.learnBody.appendChild(p2);
     els.learnBody.appendChild(tip);
     els.learnUndo.classList.remove('hidden');
     els.learnUndo.textContent = t('btn.undoLearn');
     els.learnClose.textContent = t('btn.keep');
     UI.learnAction = 'undo';
+    UI.learnContext = { kind: 'blunder', move: move };
     openModal(els.learnModal, els.learnUndo);
   }
 
@@ -2939,18 +2950,17 @@
     els.learnTitle.textContent = t('learn.whyTitle');
     els.learnBody.innerHTML = '';
     var p1 = document.createElement('p');
-    p1.setAttribute('lang', 'en');
-    p1.textContent = ex.en;
-    var p2 = document.createElement('p');
-    p2.setAttribute('lang', 'th');
-    p2.textContent = ex.th;
+    p1.setAttribute('lang', UI.lang);
+    p1.textContent = UI.lang === 'en' ? ex.en : ex.th;
     var tip = document.createElement('p');
     tip.className = 'learn-tip';
-    tip.textContent = t('blunder.safe') + ' · ' + t('blunder.safeTh');
-    els.learnBody.appendChild(p1); els.learnBody.appendChild(p2); els.learnBody.appendChild(tip);
+    tip.setAttribute('lang', UI.lang);
+    tip.textContent = t('blunder.safe');
+    els.learnBody.appendChild(p1); els.learnBody.appendChild(tip);
     els.learnUndo.classList.add('hidden');
     els.learnClose.textContent = t('btn.close') || 'Got it';
     UI.learnAction = 'close';
+    UI.learnContext = { kind: 'undo', move: move };
     openModal(els.learnModal, els.learnClose);
   }
 
@@ -3120,15 +3130,11 @@
     els.puzzleText.textContent = p.success[UI.lang];
     els.puzzleLesson.innerHTML = '';
     var p1 = document.createElement('p');
+    p1.setAttribute('lang', UI.lang);
     p1.textContent = p.lesson[UI.lang];
-    var p2 = document.createElement('p');
-    p2.setAttribute('lang', UI.lang === 'en' ? 'th' : 'en');
-    p2.style.color = 'var(--muted)';
-    p2.style.fontSize = '0.78rem';
-    p2.textContent = p.lesson[UI.lang === 'en' ? 'th' : 'en'];
     els.puzzleLesson.appendChild(p1);
-    els.puzzleLesson.appendChild(p2);
     els.puzzleLesson.classList.remove('hidden');
+    UI.puzzleModalData = p;
     openModal(els.puzzleModal, els.puzzleNext);
     updatePuzzleUI();
   }

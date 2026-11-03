@@ -30,8 +30,8 @@ Most beginner chess sites are either a bare board or a wall of theory. This stud
 
 ### The Academy
 - **Piece inspector** for all six pieces: point value, movement rules, tactical role, a short history and a coach's tip. Opening it lights the piece's legal paths on the board.
-- **Bilingual coach** (English / ภาษาไทย) that reacts to the position: centre control, development, king safety, material balance, checks and loose pieces.
-- **Blunder guard** — after a move, the engine checks whether the piece is hanging, losing an exchange, or allowing mate in one. If it is, a pop-up explains the problem in both languages and offers **Undo & learn**.
+- **Language-aware coach** (English or ภาษาไทย, following the toggle) that reacts to the position: centre control, development, king safety, material balance, checks and loose pieces.
+- **Blunder guard** — after a move, the engine checks whether the piece is hanging, losing an exchange, or allowing mate in one. If it is, a pop-up explains the problem in the selected language and offers **Undo & learn**.
 - **Compact peek card** in the Play tab so clicking a piece always brings up its explanation, even while playing.
 
 ### The puzzles
@@ -48,7 +48,7 @@ Five drills loaded from a local JSON block in `index.html`:
 Each puzzle has a hint, a bilingual lesson, attempts tracking, a completion streak and a best streak. Progress is saved separately from the casual game.
 
 ### Language and persistence
-- **EN ⇄ TH toggle** translates every control, tab, lesson, piece description and puzzle. The coach always shows both languages, with the active one emphasised.
+- **EN ⇄ TH toggle** translates every control, tab, lesson, piece description, puzzle and dialog. Only the selected language is shown; switching also re-renders any open lesson.
 - Auto-saves the ongoing game (move list, clocks, settings) and puzzle streaks to `localStorage` under `isometricChessAcademy.v1`.
 - **Export PGN** (`isometric_chess_game.pgn`) and **Export JSON** (`isometric_chess_progress.json`) download the current game, history, clocks, settings and puzzle progress.
 

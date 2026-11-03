@@ -553,12 +553,13 @@ a:hover { text-decoration: underline; }
 }
 .coach-line.coach-th {
   font-family: var(--font-thai);
-  font-size: 0.78rem;
-  color: #9fb4c6;
+  font-size: 0.83rem;
+  color: #dfeaf3;
   padding-top: 1px;
 }
-html[lang="th"] .coach-line.coach-en { color: #8698aa; font-size: 0.75rem; }
-html[lang="th"] .coach-line.coach-th { color: #e3f1fa; font-size: 0.86rem; }
+/* Only the selected language is shown. The toggle swaps the visible line. */
+html[lang="en"] .coach-th { display: none; }
+html[lang="th"] .coach-en { display: none; }
 
 .coach-foot { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; position: relative; z-index: 1; }
 .coach-pill {

@@ -63,6 +63,8 @@ check('language toggle present', /id="langBtn"/.test(html));
 check('promotion modal present', /id="promotionModal"/.test(html));
 check('mobile viewport meta present', /name="viewport"/.test(html));
 check('CSS has isometric palette', css.includes('#00e5ff') && css.includes('#00e676'));
+check('CSS hides the Thai coach line in English mode', /html\[lang="en"\] \.coach-th/.test(css));
+check('CSS hides the English coach line in Thai mode', /html\[lang="th"\] \.coach-en/.test(css));
 
 section('i18n symmetry');
 const en = Object.keys(E.i18n.en);

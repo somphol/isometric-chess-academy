@@ -2,7 +2,7 @@
 
 ## 1. What this is
 
-A static, offline, bilingual teaching app for **standard international chess** — one HTML page, three source files, no build and no network. It renders an 8×8 board in a 2.5D isometric projection, plays a full casual game locally (two humans, hot-seat), and wraps it in an academy: piece inspector, bilingual coach, blunder guard, five puzzle drills, synthesized audio, localStorage and PGN/JSON export.
+A static, offline, bilingual teaching app for **standard international chess** — one HTML page, three source files, no build and no network. It renders an 8×8 board in a 2.5D isometric projection, plays a full casual game locally (two humans, hot-seat), and wraps it in an academy: piece inspector, language-aware coach, blunder guard, five puzzle drills, synthesized audio, localStorage and PGN/JSON export.
 
 It is **not** Thai chess (Makruk), not a chess server, not an AI opponent, and not a framework starter. Thai is only an interface language. Current release: **v1.0.0**.
 
@@ -54,7 +54,7 @@ Persistence: the casual game is stored as `{ fen, initialFen, moves[], clocks }`
 - **No dependencies, no CDN, no web fonts, no runtime network.** The app must work from `file://` and GitHub Pages. `scripts/check.mjs` rejects external stylesheets/scripts/images and `fetch`/XHR/WebSocket in `script.js`.
 - **The projection is fixed.** Board coordinates, `tileCenter`, `pointToSquare`, piece draw order and the hit-test silhouette all depend on it. If you change `TH` or the origin, change all four together and re-test flipped clicks.
 - **Puzzles are data, not code.** They live in the `#puzzle-data` JSON block in `index.html`. Each expected move must be legal and, where marked, must produce mate/check; `scripts/check.mjs` enforces this. Do not add a puzzle with an illegal FEN — the side not to move must not be in check.
-- **i18n must stay symmetric.** Every key exists in `en` and `th`; static text uses `data-i18n`, dynamic text uses `t()`. CI fails on divergence or a missing static/dynamic key.
+- **i18n must stay symmetric.** Every key exists in `en` and `th`; static text uses `data-i18n`, dynamic text uses `t()`. CI fails on divergence or a missing static/dynamic key. **Only the selected language may be visible:** the coach hides the inactive line with `html[lang]` CSS, and modals render only the active language.
 - **The blunder guard is heuristic**, not a search engine. It flags hanging pieces, losing exchanges and allowed mate-in-one. It must explain, never scold, and must offer undo.
 - **Timers pause while a modal is open.** Clock state lives in `UI.clocks` and is saved; the first move starts the clock.
 - **`state.json` is historical.** It records the build session, token usage and deployment. Do not wire it into runtime logic and do not refresh it to hide history.

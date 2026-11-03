@@ -7,7 +7,7 @@ node --check script.js
 node scripts/check.mjs
 ```
 
-`scripts/check.mjs` has no dependencies and currently runs 77 checks (70 app checks, plus 7 state-file checks once `state.json` exists):
+`scripts/check.mjs` has no dependencies and currently runs 79 checks (72 app checks, plus 7 state-file checks once `state.json` exists):
 
 | Area | What is checked |
 |------|-----------------|
@@ -33,9 +33,9 @@ Exercised:
 - **Promotion:** pawn a7→a8 opened the four-choice modal; choosing queen placed a white queen on a8 with SAN `a8=Q+`.
 - **Checkmate:** back-rank position Qd8 produced `#`, opened the end modal with "Checkmate", and PGN `[Result "1-0"]`.
 - **En passant:** e5xd6 ep removed the d5 pawn, produced `exd6`, and the FEN matched.
-- **Blunder guard:** the line `e4 e5 Nf3 Nc6 Bc4 Nf6 Ng5 d5 exd5 Nxd5 Nxf7` flagged the knight on f7 as hanging to the king; modal opened with bilingual text, "Watch out" mood, `Undo & learn` and `Keep the move`. Undo restored the position and reopened the "why" lesson.
+- **Blunder guard:** the line `e4 e5 Nf3 Nc6 Bc4 Nf6 Ng5 d5 exd5 Nxd5 Nxf7` flagged the knight on f7 as hanging to the king; modal opened with text in the selected language, "Watch out" mood, `Undo & learn` and `Keep the move`. Undo restored the position and reopened the "why" lesson.
 - **Puzzles:** back-rank and ladder mate solved; wrong ladder move reset the streak, incremented attempts, rejected before commit; hint revealed; solved modal and streaks updated.
-- **i18n:** EN ⇄ TH changed the title, controls, piece inspector (Knight → อัศวิน), movement text, puzzle list and coach; blunder text used Thai piece names in the Thai line.
+- **i18n:** EN ⇄ TH changed the title, controls, piece inspector (Knight → อัศวิน), movement text, puzzle list and coach; a visible-text scan found no Thai characters in English mode (initial, blunder modal, puzzle modal), and blunder text used Thai piece names in Thai mode.
 - **Persistence:** after a reload, `e4 e5`, language `th`, clock values, puzzle solved list and undo-enabled state were restored.
 - **Export:** PGN headers/SAN/result; JSON parses with `fen`, `history`, `puzzles`, `settings`.
 - **Mobile:** 390×844, `scrollWidth === innerWidth`, canvas 368 px wide, no horizontal overflow.
@@ -50,7 +50,7 @@ Run after any rule, projection, i18n or layout change:
 3. Push a pawn two squares; immediately capture en passant with an adjacent pawn.
 4. Promote to each of Q/R/B/N; check board, SAN and sound.
 5. Scholar's mate or the back-rank puzzle; confirm end modal, result header and clocks stop.
-6. Hang a queen; confirm the blunder modal appears (guard on), explain both languages, undo and replay.
+6. Hang a queen; confirm the blunder modal appears (guard on), switch EN/TH while it is open and confirm it re-renders in the selected language, then undo and replay.
 7. Toggle learning off → coach dims; toggle on → coach returns.
 8. Flip the board, select and move a piece by clicking; labels stay correct.
 9. Switch EN ⇄ TH on each tab; inspect a piece; open a puzzle.
