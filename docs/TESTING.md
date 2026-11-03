@@ -5,9 +5,10 @@
 ```bash
 node --check script.js
 node scripts/check.mjs
+shasum -a 256 -c docs/MANIFEST.sha256
 ```
 
-`scripts/check.mjs` has no dependencies and currently runs 86 checks (79 app and documentation checks, plus 7 state-file checks once `state.json` exists):
+`scripts/check.mjs` has no dependencies and currently runs 87 checks (80 app and documentation checks, plus 7 state-file checks once `state.json` exists):
 
 | Area | What is checked |
 |------|-----------------|
@@ -20,6 +21,7 @@ node scripts/check.mjs
 | Notation | SAN sequence `e4 e5 Nf3 Nc6 Bb5 Nf6 O-O`; mate SAN ends `#` |
 | Analysis | attack detection; material balance; state.json shape when present |
 | Release docs | required documentation set exists; README links it; changelog/citation/security/conduct are present; relative Markdown links resolve |
+| Artifact integrity | SHA-256 manifest covers the three source files and screenshots and matches the working tree |
 
 The engine is exported to Node, so these are the real rules used by the browser, not a duplicate implementation.
 

@@ -7,6 +7,7 @@ The project has one page of runtime code but more than one audience. Start with 
 | Goal | Read |
 |------|------|
 | Play or teach with the app | [README](../README.md) · [FAQ](FAQ.md) |
+| Rebuild or hand off the project | [REPRODUCTION](REPRODUCTION.md) · [PROVENANCE](PROVENANCE.md) · [DECISIONS](DECISIONS.md) |
 | Understand how the board and engine work | [ARCHITECTURE](ARCHITECTURE.md) |
 | Understand the visual and coaching system | [DESIGN](DESIGN.md) |
 | Contribute code, copy or a puzzle | [CONTRIBUTING](../CONTRIBUTING.md) · [PUZZLES](PUZZLES.md) |
@@ -24,6 +25,10 @@ The project has one page of runtime code but more than one audience. Start with 
 
 | Document | Scope |
 |----------|-------|
+| [REPRODUCTION.md](REPRODUCTION.md) | Requirements matrix, 13-stage rebuild recipe, engine/renderer/UI contracts, verification, deployment and handoff checklist |
+| [PROVENANCE.md](PROVENANCE.md) | Original brief, clarifications, session/tool record, credential paths, release history, what was not done |
+| [DECISIONS.md](DECISIONS.md) | ADR log for ruleset, projection, language isolation, storage, credentials and release process |
+| [MANIFEST.sha256](MANIFEST.sha256) | Exact SHA-256 hashes for source files and screenshots |
 | [ARCHITECTURE.md](ARCHITECTURE.md) | Board model, move pipeline, SAN, status, blunder heuristic, projection formulas, renderer, storage schema, extension recipes |
 | [DESIGN.md](DESIGN.md) | Palette, typography, board styling, interaction states, motion, coaching voice, Thai glossary, review checklist |
 | [TESTING.md](TESTING.md) | 86 automated checks, headless verification, manual matrix, known gaps |
@@ -56,6 +61,8 @@ The project has one page of runtime code but more than one audience. Start with 
 - **Links are tested.** `scripts/check.mjs` verifies that every required document exists, that the README links it, and that relative Markdown links resolve.
 - **No secrets.** Never put tokens, credentials, private URLs or personal data in docs, screenshots, issues or commit messages.
 - **`state.json` is historical.** It records the build session and must not be treated as runtime configuration.
+- **Artifacts are checksummed.** Source/screenshot changes require updating `MANIFEST.sha256`; the check suite fails on a stale hash.
+- **Handoff is explicit.** `REPRODUCTION.md` is the rebuild book; `DECISIONS.md` records constraints; `PROVENANCE.md` preserves the brief and session facts.
 
 ## Documentation health
 

@@ -1,0 +1,14 @@
+# SHA-256 manifest for the release artifacts.
+# Verify from the repository root with:
+#   shasum -a 256 -c docs/MANIFEST.sha256
+#
+# The three source files are the reproducible core. Screenshots are included
+# because they are part of the published release. Update this file whenever a
+# listed artifact changes, and run `node scripts/check.mjs`.
+86d5e65292699da5a2c8d7451d1093a7f4fc8a77079b8c0db935f3ede86775ee  index.html
+dc29fb8b5acf87b6004f57d8a05972f31d00d9a7e4d01e848b3faa7421d1ce79  style.css
+6b0090a75b9533da24dd8207c056d5f5054b7d7d25e7c35cc8561ddc272b5be6  script.js
+d11a500fb7d8f36b16273f021b1f73435d6993569a334995c12e52e39c7e3d2c  assets/hero.jpg
+25bcaef30431b42d6fb2d23d5a28dae893345f9f8859d343175551228ec23be6  assets/academy.jpg
+4acfd545bb87e83a94d2a3974ca2069b2bd540d46aa9b623cf7f40224d2505fd  assets/puzzles.jpg
+9a47e125da03a266d33aabec648a5bc5814c5967044e758457a81d76972eb078  assets/mobile.jpg

@@ -4,6 +4,7 @@
  * No dependencies. Run: node scripts/check.mjs
  */
 import fs from 'node:fs';
+import crypto from 'node:crypto';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
@@ -71,6 +72,7 @@ const requiredDocs = [
   'README.md', 'CHANGELOG.md', 'CONTRIBUTING.md', 'CODE_OF_CONDUCT.md',
   'SECURITY.md', 'SUPPORT.md', 'ROADMAP.md', 'CITATION.cff',
   'THIRD_PARTY_NOTICES.md', 'docs/README.md', 'docs/ARCHITECTURE.md', 'docs/DESIGN.md',
+  'docs/REPRODUCTION.md', 'docs/DECISIONS.md', 'docs/PROVENANCE.md', 'docs/MANIFEST.sha256',
   'docs/TESTING.md', 'docs/DEPLOYMENT.md', 'docs/ACCESSIBILITY.md',
   'docs/RELEASE.md', 'docs/PRIVACY.md', 'docs/PUZZLES.md', 'docs/FAQ.md',
   '.github/PULL_REQUEST_TEMPLATE.md', '.github/CODEOWNERS',
@@ -114,6 +116,27 @@ for (const rel of markdownFiles) {
   }
 }
 check('relative Markdown links resolve', brokenLinks.length === 0, brokenLinks.slice(0, 6).join(', '));
+
+section('Artifact integrity');
+let manifestErrors = [];
+try {
+  const manifest = fs.readFileSync(path.join(root, 'docs/MANIFEST.sha256'), 'utf8');
+  const entries = manifest.split('\n').map((line) => line.trim()).filter((line) => line && !line.startsWith('#'));
+  const covered = entries.map((line) => line.split(/\s+/).slice(1).join(' '));
+  for (const file of ['index.html', 'style.css', 'script.js']) {
+    if (!covered.includes(file)) manifestErrors.push('missing ' + file);
+  }
+  for (const line of entries) {
+    const parts = line.split(/\s+/);
+    const expected = parts[0];
+    const rel = parts.slice(1).join(' ');
+    const actual = crypto.createHash('sha256').update(fs.readFileSync(path.join(root, rel))).digest('hex');
+    if (actual !== expected) manifestErrors.push(rel);
+  }
+} catch (err) {
+  manifestErrors.push(err.message);
+}
+check('SHA-256 manifest matches release artifacts', manifestErrors.length === 0, manifestErrors.join(', '));
 
 section('i18n symmetry');
 const en = Object.keys(E.i18n.en);

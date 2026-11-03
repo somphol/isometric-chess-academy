@@ -42,9 +42,10 @@ There is no `npm install`, no bundler and no build output.
 ```bash
 node --check script.js
 node scripts/check.mjs
+shasum -a 256 -c docs/MANIFEST.sha256
 ```
 
-Both must pass. If you changed the board or UI, also do a manual pass:
+All must pass. If you changed a source file or screenshot, update `docs/MANIFEST.sha256` in the same pull request. If you changed the board or UI, also do a manual pass:
 
 - 1440 px desktop and 390 px mobile.
 - English and Thai.

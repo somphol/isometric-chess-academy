@@ -40,6 +40,7 @@ grep -rn "x\.y\.z\|1\.0\.0" --exclude-dir=.git --exclude='*.jpg' .
 
 - [ ] `node --check script.js`
 - [ ] `node scripts/check.mjs` — all checks pass
+- [ ] `shasum -a 256 -c docs/MANIFEST.sha256` — artifacts unchanged or manifest updated
 - [ ] Manual regression from [TESTING.md](TESTING.md)
 - [ ] English mode contains no visible Thai; Thai mode contains no English prose
 - [ ] 1440 px desktop and 390 px mobile checked
@@ -47,6 +48,7 @@ grep -rn "x\.y\.z\|1\.0\.0" --exclude-dir=.git --exclude='*.jpg' .
 - [ ] All version locations above updated
 - [ ] Screenshots in `assets/` regenerated if the UI changed
 - [ ] `README.md`, `AGENTS.md` and docs still describe reality
+- [ ] `docs/MANIFEST.sha256` updated for every changed source/screenshot artifact
 - [ ] `state.json` refreshed with final elapsed time and token usage
 - [ ] No secrets, tokens or personal data staged
 

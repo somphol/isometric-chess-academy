@@ -114,6 +114,7 @@ Use an HTTP origin when testing persistence, clipboard or download behaviour.
 
 - [ ] `node --check script.js` passes.
 - [ ] `node scripts/check.mjs` passes.
+- [ ] `shasum -a 256 -c docs/MANIFEST.sha256` passes.
 - [ ] `CHANGELOG.md` reflects the release.
 - [ ] Screenshots in `assets/` match the current UI.
 - [ ] `state.json` deployment URLs are current.

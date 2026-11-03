@@ -5,10 +5,10 @@
   "session": {
     "id": "ses_e607f33aaffe8e4SA7JRy9ej1f",
     "startedAt": "2026-11-03T03:43:00.699000Z",
-    "capturedAt": "2026-11-03T04:26:19.589580Z",
-    "elapsedSeconds": 2598,
-    "elapsed": "43m 18s",
-    "note": "Wall-clock time from the OpenCode session's creation to the final documentation capture. The app, repository, CI, documentation set and live GitHub Pages deployment were complete at capture time. The v1.0.0 tag and GitHub release were published immediately after."
+    "capturedAt": "2026-11-03T05:11:50.854831Z",
+    "elapsedSeconds": 5330,
+    "elapsed": "88m 50s",
+    "note": "Wall-clock time from the OpenCode session's creation to the final reproduction-documentation capture. The app, repository, CI, professional docs, reproduction book, ADR log, provenance record and live GitHub Pages deployment were complete at capture time. Documentation-only commits follow the v1.0.0 tag; the tag identifies the app release."
   },
   "model": {
     "name": "DeepSeek V4.1 Flash",
@@ -16,12 +16,12 @@
     "provider": "opencode-go"
   },
   "usage": {
-    "inputTokens": 583051,
-    "outputTokens": 141512,
-    "reasoningTokens": 109741,
-    "cacheReadTokens": 32952064,
+    "inputTokens": 620900,
+    "outputTokens": 162967,
+    "reasoningTokens": 122432,
+    "cacheReadTokens": 40659456,
     "cacheWriteTokens": 1282,
-    "totalTokens": 33787650,
+    "totalTokens": 41567037,
     "costUSD": 0.0,
     "note": "Read from the OpenCode session database. totalTokens sums all five counters, including cache reads; cache reads are repeated prompt context and dominate the figure. costUSD is 0 on the flat-rate plan."
   },
@@ -73,12 +73,16 @@
       "assets/hero.jpg",
       "assets/academy.jpg",
       "assets/puzzles.jpg",
-      "assets/mobile.jpg"
+      "assets/mobile.jpg",
+      "docs/REPRODUCTION.md",
+      "docs/DECISIONS.md",
+      "docs/PROVENANCE.md",
+      "docs/MANIFEST.sha256"
     ]
   },
   "verification": {
     "method": "Node verification suite plus headless Chrome over the DevTools Protocol",
-    "automatedChecks": 86,
+    "automatedChecks": 87,
     "checks": [
       "Perft start position depths 1-4: 20 / 400 / 8902 / 197281",
       "Kiwipete depths 1-2: 48 / 2039",
@@ -93,7 +97,9 @@
       "390 x 844 mobile viewport: no horizontal overflow",
       "Live GitHub Pages page and all assets return HTTP 200",
       "English mode shows no Thai text (initial, blunder modal, puzzle modal); Thai mode shows no English coach or lesson prose",
-      "Release documentation set (index, architecture, design, testing, deployment, accessibility, release, privacy, puzzles, FAQ, contributing, conduct, security, support, roadmap, citation, third-party notices) present, linked from README, and relative Markdown links verified"
+      "Release documentation set (index, architecture, design, testing, deployment, accessibility, release, privacy, puzzles, FAQ, contributing, conduct, security, support, roadmap, citation, third-party notices) present, linked from README, and relative Markdown links verified",
+      "Reproduction book, ADR log and provenance record cover requirements, build stages, engine/renderer/UI contracts, data schemas, credentials, deployment and handoff",
+      "SHA-256 manifest matches index.html, style.css, script.js and the four release screenshots"
     ],
     "consoleErrors": 0
   },
@@ -103,7 +109,7 @@
     "host": "GitHub Pages",
     "branch": "main",
     "path": "/",
-    "verifiedAt": "2026-11-03T04:26:19.589580Z",
+    "verifiedAt": "2026-11-03T05:11:50.854831Z",
     "status": "live"
   },
   "credits": {

@@ -6,6 +6,11 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+### Added
+
+- Complete reproduction handoff: build book, ADR log, provenance record, source/screenshot checksum manifest, and CI integrity checks.
+- Professional release documentation: changelog, contributing, code of conduct, security, support, roadmap, citation, third-party notices, design/deployment/accessibility/release/privacy/puzzle/FAQ guides, issue forms, PR template, CODEOWNERS and Dependabot.
+
 ### Planned
 
 - Native Thai copy review and a public accessibility audit.

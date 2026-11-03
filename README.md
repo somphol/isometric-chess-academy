@@ -13,6 +13,8 @@ A complete, offline, bilingual chess studio on a hand-built **2.5D isometric boa
 
 > **This is standard Western chess.** It uses kings, queens, bishops, rooks, knights and pawns with castling, en passant, promotion, checkmate, stalemate and the usual draw rules. Thai is only an interface language — this is **not Makruk** (Thai chess).
 
+> **Another AI agent or maintainer?** Start with [docs/REPRODUCTION.md](docs/REPRODUCTION.md), then [docs/PROVENANCE.md](docs/PROVENANCE.md) and [docs/DECISIONS.md](docs/DECISIONS.md). The checksum manifest is [docs/MANIFEST.sha256](docs/MANIFEST.sha256).
+
 ## Why it exists
 
 Most beginner chess sites are either a bare board or a wall of theory. This studio puts a calm, tactile 2.5D board next to a patient coach. You can play a casual game, stop to inspect any piece, undo a blunder and read why it was dangerous, then practise the same idea in a five-minute puzzle.
@@ -136,6 +138,10 @@ node scripts/check.mjs
 | Document | What it covers |
 |----------|----------------|
 | [docs/README.md](docs/README.md) | Documentation index by audience, conventions and health checks |
+| [docs/REPRODUCTION.md](docs/REPRODUCTION.md) | Complete build book: requirements, 13-stage rebuild recipe, engine/renderer/UI contracts, checksums and handoff checklist |
+| [docs/PROVENANCE.md](docs/PROVENANCE.md) | Original brief, late clarifications, session record, credential handling, release history |
+| [docs/DECISIONS.md](docs/DECISIONS.md) | ADR log: why Western chess, fixed 2.5D, no dependencies, language isolation, credential strategy and more |
+| [docs/MANIFEST.sha256](docs/MANIFEST.sha256) | SHA-256 checksums for the three source files and release screenshots |
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Board model, engine pipeline, isometric projection, renderer, storage schema, extension recipes |
 | [docs/DESIGN.md](docs/DESIGN.md) | Visual system, semantics, motion, coaching voice, Thai glossary, design review checklist |
 | [docs/TESTING.md](docs/TESTING.md) | Automated checks, headless verification, manual regression matrix, known gaps |

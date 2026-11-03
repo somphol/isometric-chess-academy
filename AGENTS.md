@@ -1,5 +1,7 @@
 # AGENTS.md — Isometric Chess Academy & Studio
 
+> **Start here for handoff:** [docs/REPRODUCTION.md](docs/REPRODUCTION.md) is the complete rebuild/verification book. [docs/PROVENANCE.md](docs/PROVENANCE.md) preserves the original brief and session record. [docs/DECISIONS.md](docs/DECISIONS.md) explains the constraints. [docs/MANIFEST.sha256](docs/MANIFEST.sha256) proves the source matches the release.
+
 ## 1. What this is
 
 A static, offline, bilingual teaching app for **standard international chess** — one HTML page, three source files, no build and no network. It renders an 8×8 board in a 2.5D isometric projection, plays a full casual game locally (two humans, hot-seat), and wraps it in an academy: piece inspector, language-aware coach, blunder guard, five puzzle drills, synthesized audio, localStorage and PGN/JSON export.
@@ -24,7 +26,7 @@ node scripts/check.mjs
 git push origin main
 ```
 
-`scripts/check.mjs` runs 86 checks: perft, puzzle validation, i18n symmetry, release-documentation integrity, relative Markdown links and the state-file shape. Headless Chrome (CDP) was used for interaction testing during 1.0.0 but is not part of the repo; see [docs/TESTING.md](docs/TESTING.md).
+`scripts/check.mjs` runs 87 checks: perft, puzzle validation, i18n symmetry, release-documentation integrity, relative Markdown links, SHA-256 artifact integrity and the state-file shape. Headless Chrome (CDP) was used for interaction testing during 1.0.0 but is not part of the repo; see [docs/TESTING.md](docs/TESTING.md).
 
 ## 3. Architecture
 
@@ -57,6 +59,7 @@ Persistence: the casual game is stored as `{ fen, initialFen, moves[], clocks }`
 - **i18n must stay symmetric.** Every key exists in `en` and `th`; static text uses `data-i18n`, dynamic text uses `t()`. CI fails on divergence or a missing static/dynamic key. **Only the selected language may be visible:** the coach hides the inactive line with `html[lang]` CSS, and modals render only the active language.
 - **The blunder guard is heuristic**, not a search engine. It flags hanging pieces, losing exchanges and allowed mate-in-one. It must explain, never scold, and must offer undo.
 - **Timers pause while a modal is open.** Clock state lives in `UI.clocks` and is saved; the first move starts the clock.
+- **Artifact integrity is part of the release.** `docs/MANIFEST.sha256` covers the three source files and screenshots. Changing any listed file requires updating the manifest and rerunning the suite.
 - **Documentation is part of the release.** `README.md` is the index; every guide lives in `docs/` and every root policy file is linked from the README. `scripts/check.mjs` fails if a required doc is missing, a relative link is broken, or the changelog/citation/conduct/security files drift.
 - **`state.json` is historical.** It records the build session, token usage and deployment. Do not wire it into runtime logic and do not refresh it to hide history.
 - **No analytics, no tracking, no remote calls.** Exports are generated locally as Blobs.
@@ -76,6 +79,6 @@ Persistence: the casual game is stored as `{ fen, initialFen, moves[], clocks }`
 - **Deployed copy:** GitHub Pages, `main`, repository root. URL above.
 - **Local master:** `~/Projects/isometric-chess-academy`.
 - **History:** `state.json` captures the session id, wall-clock elapsed time, token counts and deployment URLs at release. `CHANGELOG.md` is the release history.
-- **Documentation map:** [docs/README.md](docs/README.md) is the audience index; [README.md](README.md) is the human entry point; [ARCHITECTURE.md](docs/ARCHITECTURE.md) the technical map; [DESIGN.md](docs/DESIGN.md) the visual and pedagogical system; [TESTING.md](docs/TESTING.md) the verified matrix; [DEPLOYMENT.md](docs/DEPLOYMENT.md) Pages operations; [ACCESSIBILITY.md](docs/ACCESSIBILITY.md) honest gaps; [RELEASE.md](docs/RELEASE.md) the tag/checklist/hotfix process; [PRIVACY.md](docs/PRIVACY.md) data handling; [PUZZLES.md](docs/PUZZLES.md) the puzzle ladder; [FAQ.md](docs/FAQ.md) common questions.
+- **Documentation map:** [docs/README.md](docs/README.md) is the audience index; [REPRODUCTION.md](docs/REPRODUCTION.md) is the rebuild book; [PROVENANCE.md](docs/PROVENANCE.md) preserves the brief/session; [DECISIONS.md](docs/DECISIONS.md) is the ADR log; [MANIFEST.sha256](docs/MANIFEST.sha256) is the integrity manifest; [README.md](README.md) is the human entry point; [ARCHITECTURE.md](docs/ARCHITECTURE.md) the technical map; [DESIGN.md](docs/DESIGN.md) the visual and pedagogical system; [TESTING.md](docs/TESTING.md) the verified matrix; [DEPLOYMENT.md](docs/DEPLOYMENT.md) Pages operations; [ACCESSIBILITY.md](docs/ACCESSIBILITY.md) honest gaps; [RELEASE.md](docs/RELEASE.md) the tag/checklist/hotfix process; [PRIVACY.md](docs/PRIVACY.md) data handling; [PUZZLES.md](docs/PUZZLES.md) the puzzle ladder; [FAQ.md](docs/FAQ.md) common questions.
 - **Policies:** [CONTRIBUTING.md](CONTRIBUTING.md), [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md), [SECURITY.md](SECURITY.md), [SUPPORT.md](SUPPORT.md), [ROADMAP.md](ROADMAP.md), [CITATION.cff](CITATION.cff), [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 - **Publishing:** the repository should stay public (MIT) and Pages should stay on `main` / `/`. If the repo is renamed, update the absolute URLs in `index.html` (OG tags), `README.md`, `AGENTS.md`, `script.js` (PGN `Site` header), `CITATION.cff` and `state.json`. Follow [docs/RELEASE.md](docs/RELEASE.md) before tagging.
